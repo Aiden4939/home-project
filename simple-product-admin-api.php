@@ -35,10 +35,11 @@ $output = [
 ];
 
 
+// 刪除sql
 $sql_delete = "DELETE FROM `products` WHERE sid=?";
 $stmt_delete = $pdo->prepare($sql_delete);
 
-//刪除
+// 刪除
 if ($_POST['state'] == '0') {
     $stmt_delete->execute([
         $_POST['sid']
@@ -83,7 +84,8 @@ if (!empty($_FILES['photo']['name'])) {
 
     $src = './upload/' . $filename;
 } else {
-    $src = './upload/' . '0.jpg';
+    // $src = './upload/' . '0.jpg';
+    $src = $_POST['src'];
 }
 
 

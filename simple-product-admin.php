@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 
 fetch("Store_islogin_api.php").then(r => r.json()).then(res => {
         if (res == 0) {
@@ -9,15 +9,15 @@ fetch("Store_islogin_api.php").then(r => r.json()).then(res => {
 
 
 
-</script>
+</script> -->
 
 
 <?php require __DIR__ . '/parts/connect_db.php';
 
 
-$sid = $_SESSION['store']['sid'];
+// $sid = $_SESSION['store']['sid'];
 
-// $sid = $_GET['shop'];
+$sid = $_GET['shop'];
 
 $sql_all = "SELECT * FROM `products` WHERE shop_sid=$sid";
 $rows_all = $pdo->query($sql_all)->fetchAll();
@@ -53,7 +53,8 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
 
                 <tr>
                     <td style="display:none ;"><?= $rows_all[$k]['sid'] ?></td>
-                    <td><img src="<?= $rows_all[$k]['src'] ?>" alt=""></td>
+                    <td ><img src="<?= $rows_all[$k]['src'] ?> " alt="" ></td>
+                    <td style="display:none ;"><?= $rows_all[$k]['src'] ?></td>
                     <td><?= $rows_all[$k]['name'] ?></td>
                     <td><?= $rows_all[$k]['price'] ?></td>
                     <td><?= ($rows_all[$k]['available'] == '1') ? '上架中' : '尚未上架' ?></td>
@@ -79,9 +80,9 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
         <label for=""></label>
         <input type="text" name="sid" class="sid" value="" style="display:none;" class='hidden-sid'>
 
-        <input type="file" class="file" name="photo" accept="image/png,image/jpeg">
-
+        <input type="file" class="file" name="photo" accept="image/png,image/jpeg" >
         <img class="photo" src="" alt="">
+        <input type="text" name="src" value="" style="display:none;">
 
         <label for="product-name" class="">餐點名稱</label>
         <input type="text" class="name" name="name" value="">
@@ -103,7 +104,6 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
     let container = document.querySelector('.container');
     let editBox = document.querySelector(".edit-form");
     container.addEventListener("click", e => {
-        console.log(e.target)
         if (e.target.classList.contains("edit-btn")) {
             editBox.classList.remove("hidden");
             let editProduct = e.target.closest("tr");
@@ -113,20 +113,21 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
             editBoxList[0].value = editProductList[0].innerText;
             editBoxList[2].value = editProductList[2].innerText;
             editBoxList[3].value = editProductList[3].innerText;
-            console.log(editBoxList[4])
-            if (editProductList[4].innerText == '上架中') {
-                editBoxList[4].checked = true;
+            editBoxList[4].value = editProductList[4].innerText;
+            if (editProductList[5].innerText == '上架中') {
+                editBoxList[5].checked = true;
             } else {
-                editBoxList[4].checked = false;
+                editBoxList[5].checked = false;
             }
+            
 
         }
         if (e.target.classList.contains("add-btn")) {
             editBox.classList.remove("hidden");
             editBox.querySelector("img").src = '';
             editBox.querySelectorAll("input")[0].value = '';
-            editBox.querySelectorAll("input")[2].value = '';
             editBox.querySelectorAll("input")[3].value = '';
+            editBox.querySelectorAll("input")[4].value = '';
         }
     })
 
