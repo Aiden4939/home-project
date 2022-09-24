@@ -17,7 +17,7 @@ fetch("Store_islogin_api.php").then(r => r.json()).then(res => {
 
 $sid = $_SESSION['store']['sid'];
 
-$sid = $_GET['shop'];
+// $sid = $_GET['shop'];
 
 $sql_all = "SELECT * FROM `products` WHERE shop_sid=$sid";
 $rows_all = $pdo->query($sql_all)->fetchAll();
