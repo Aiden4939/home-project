@@ -85,7 +85,7 @@ if (!empty($_FILES['photo']['name'])) {
     $src = './upload/' . $filename;
 } else {
     // $src = './upload/' . '0.jpg';
-    $src = $_POST['src'];
+    $src = $_POST['src'];  
 }
 
 
@@ -95,7 +95,7 @@ if (!empty($_FILES['photo']['name'])) {
 
 // 判斷name和price是否為空
 if (empty($_POST['name']) or empty($_POST['price'])) {
-    $output['error'] = '參數不足';
+    $output['error'] = '請完整填寫商品名稱與數量';
     $output['code'] = 400;
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;

@@ -53,14 +53,14 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
 
                 <tr>
                     <td style="display:none ;"><?= $rows_all[$k]['sid'] ?></td>
-                    <td ><img src="<?= $rows_all[$k]['src'] ?> " alt="" ></td>
+                    <td><img src="<?= $rows_all[$k]['src'] ?> " alt=""></td>
                     <td style="display:none ;"><?= $rows_all[$k]['src'] ?></td>
                     <td><?= $rows_all[$k]['name'] ?></td>
                     <td><?= $rows_all[$k]['price'] ?></td>
                     <td><?= ($rows_all[$k]['available'] == '1') ? '上架中' : '尚未上架' ?></td>
                     <td>
                         <!-- <button type="button" onclick="editProduct();return false;" class="edit-btn">修改</button> -->
-                        <a href="" onclick="return false;" class="edit-btn"><i class="fa-solid fa-pen-to-square edit-btn" ></i></a>
+                        <a href="" onclick="return false;" class="edit-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></a>
                     </td>
                     <td>
                         <!-- <button type="button" onclick="deleteProduct(event);return false;" class="delete-btn">刪除</button> -->
@@ -80,15 +80,15 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
         <label for=""></label>
         <input type="text" name="sid" class="sid" value="" style="display:none;" class='hidden-sid'>
 
-        <input type="file" class="file" name="photo" accept="image/png,image/jpeg" >
+        <input type="file" class="file" name="photo" accept="image/png,image/jpeg">
         <img class="photo" src="" alt="">
         <input type="text" name="src" value="" style="display:none;">
 
         <label for="product-name" class="">餐點名稱</label>
-        <input type="text" class="name" name="name" value="">
+        <input type="text" class="name" name="name" value="" required>
 
         <label for="product-price" class="">餐點價格</label>
-        <input type="number" class="price" name="price" value="">
+        <input type="number" class="price" name="price" value="" required>
 
         <input type="checkbox" class="available" name="available" id="available">
         <label class=" available" for="available">是否上架</label>
@@ -119,7 +119,7 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
             } else {
                 editBoxList[5].checked = false;
             }
-            
+
 
         }
         if (e.target.classList.contains("add-btn")) {
@@ -175,8 +175,20 @@ $rows_type = $pdo->query($sql_type)->fetchAll();
 
         }
     }
+    // 檢查數字
+    function checkFormat(i) {
+        let isValid = true;
+        if (isNaN(parseInt(i))) {
+            isValid = false; 
+        }
+        return isValid;
+    }
 
     function submitForm() {
+        if (!checkFormat(editBox.querySelector(".price").value)) {
+            alert("價格請輸入阿拉伯數字");
+            return;
+        }
         const fd = new FormData(document.form1);
 
         fetch('simple-product-admin-api.php', {
